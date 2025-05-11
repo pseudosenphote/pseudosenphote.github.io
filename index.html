@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Réalisateur - [Votre Nom] - Correction Bordure Overlay</title>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <title>Portfolio Réalisateur - Thiméo Nguyen - Showreel & Projets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <!-- API Player Vimeo -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <style>
         :root {
             --primary-color: #121212;
             --secondary-color: #1e1e1e;
-            --accent-color: #f39c12; 
+            --accent-color: #d1ab5f;
             --text-color: #e0e0e0;
             --text-muted: #a0a0a0;
             --border-color: #333333;
@@ -112,7 +114,7 @@
         nav ul li a:hover::after, nav ul li a.active::after {
             width: 100%;
         }
-        
+
         .nav-toggle {
             display: none;
             font-size: 1.8rem;
@@ -128,7 +130,7 @@
             min-height: 80vh;
             overflow: hidden;
         }
-        
+
         .section-title {
             font-family: var(--font-secondary);
             font-size: 3.2rem;
@@ -156,8 +158,9 @@
             align-items: center;
             text-align: center;
             min-height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1505682499293-230dd9df66e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmlsbW1ha2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1200&q=70') no-repeat center center/cover;
-            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1635776062360-af423602aff3?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            background-attachment: fixed; /* Ajout pour l'effet parallax */
+            position: relative; /* Nécessaire pour le positionnement absolu de .scroll-down-arrow */
         }
 
         #accueil h1 {
@@ -215,6 +218,28 @@
             60% { transform: translateX(-50%) translateY(-7px); }
         }
 
+        /* Showreel Section */
+        #showreel .showreel-video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 960px; /* Adjust as needed */
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            background-color: #000; /* Fallback background */
+        }
+        #showreel .showreel-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
         /* Projets */
         .projects-grid {
             display: grid;
@@ -231,7 +256,7 @@
             cursor: pointer;
             position: relative;
         }
-        
+
         .project-item-media {
             width: 100%;
             height: 220px;
@@ -246,7 +271,7 @@
             display: block;
             transition: transform 0.5s ease;
         }
-        
+
         .project-item-overlay {
             position: absolute;
             top: 0;
@@ -262,7 +287,7 @@
             opacity: 0;
             transition: opacity 0.4s ease;
             text-align: center;
-            border-radius: inherit; /* <<< CORRECTION ICI */
+            border-radius: inherit;
         }
         .project-item-overlay h3 {
             font-family: var(--font-secondary);
@@ -349,7 +374,7 @@
             position: relative;
         }
         #cv ul li.cv-item::before {
-            content: '•'; 
+            content: '•';
             position: absolute;
             left: 0;
             top: 2px;
@@ -375,7 +400,7 @@
             font-size: 0.95rem;
             color: var(--text-color);
         }
-        
+
         #cv .skills-list {
             display: flex;
             flex-wrap: wrap;
@@ -488,7 +513,7 @@
             from { opacity: 0; transform: scale(0.9) translateY(20px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
-        
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -521,7 +546,7 @@
 
         .modal-body .vimeo-embed-container {
             position: relative;
-            padding-bottom: 56.25%; 
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             max-width: 100%;
@@ -571,6 +596,7 @@
             .section-title { font-size: 2.8rem; }
             #accueil h1 { font-size: 3.5rem; }
             #accueil p.subtitle { font-size: 1.4rem; }
+            #showreel .showreel-video-container { max-width: 100%; }
         }
 
         @media (max-width: 768px) {
@@ -581,7 +607,7 @@
                 width: 100%;
                 background-color: rgba(25, 25, 25, 0.98);
                 position: absolute;
-                top: 100%; 
+                top: 100%;
                 left: 0;
                 padding: 1rem 0;
                 box-shadow: 0 5px 10px var(--shadow-medium);
@@ -600,7 +626,7 @@
             #accueil h1 { font-size: 2.8rem; }
             #accueil p.subtitle { font-size: 1.2rem; }
             .section-title { font-size: 2.4rem; }
-            
+
             .projects-grid {
                 grid-template-columns: 1fr;
                 gap: 25px;
@@ -642,6 +668,7 @@
             </button>
             <ul id="nav-menu">
                 <li><a href="#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="#showreel" class="nav-link">Showreel</a></li>
                 <li><a href="#projets" class="nav-link">Projets</a></li>
                 <li><a href="#cv" class="nav-link">CV</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -653,10 +680,26 @@
         <div class="container reveal">
             <h1>Thiméo Nguyen</h1>
             <p class="subtitle">Réalisateur passionné, transformant des visions en récits cinématographiques captivants. Explorez mon univers.</p>
-            <a href="#projets" class="cta-button">Découvrir mes projets</a>
+            <a href="#showreel" class="cta-button">Voir mon Showreel</a>
         </div>
         <div class="scroll-down-arrow">
-            <a href="#projets" aria-label="Scroll to projects"><i class="fas fa-chevron-down"></i></a>
+            <a href="#showreel" aria-label="Scroll to showreel"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <section id="showreel">
+        <div class="container">
+            <h2 class="section-title reveal">Mon Showreel</h2>
+            <div class="showreel-video-container reveal">
+                <!-- REMPLACEZ "VOTRE_ID_VIDEO_VIMEO" par l'ID réel de votre vidéo Showreel Vimeo -->
+                <!-- Ajout d'un ID à l'iframe pour le ciblage JS -->
+                <iframe
+                    id="showreelVideo"
+                    src="https://player.vimeo.com/video/1052685291?autoplay=1&muted=0&loop=1&title=0&byline=0&portrait=0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
     </section>
 
@@ -664,25 +707,20 @@
         <div class="container">
             <h2 class="section-title reveal">Mes Projets</h2>
             <div class="projects-grid">
-
-                <!-- Projet 1 (Vimeo) -->
-                <div class="project-item reveal" 
-                     data-type="vimeo" 
-                     data-vimeo-id="1052685291" 
-                     data-title="Court-Métrage: Dawn Of The Cookies" 
+                <div class="project-item reveal"
+                     data-type="vimeo"
+                     data-vimeo-id="1052685291"
+                     data-title="Court-Métrage: Dawn Of The Cookies"
                      data-description="Un court-métrage comique réalisé dans le cadre de mon dossier d'admission à la Toronto Metropolitan University.">
                     <div class="project-item-media">
-                        <img src="https://i.vimeocdn.com/video/1977714387-4b6d2e705e4b82ccb7c96f5d7d1e23115a1fc23d3e002868443b9a7b8eb0f835-d_640x360?&r=pad&region=us" alt="Dawn Of The Cookies" class="thumbnail">
+                        <img src="https://i.vimeocdn.com/video/1977714387-4b6d2e705e4b82ccb7c96f5d7d1e23115a1fc23d3e002868443b9a7b8eb0f835-d_640x360?&r=pad®ion=us" alt="Dawn Of The Cookies" class="thumbnail">
                     </div>
                     <div class="project-item-overlay">
-                        <h3>Dawn Of The Cookies <i class="fab fa-vimeo-v project-type-icon"></i></h3>
+                        <h3>Dawn Of The Cookies</h3>
                         <p class="overlay-category">Court-Métrage - Réalisation, Scénario</p>
                         <span class="overlay-cta">Voir le projet <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </section>
@@ -736,15 +774,15 @@
                     <li><i class="fas fa-pen-nib"></i>Scénarisation & Storytelling</li>
                     <li><i class="fas fa-users"></i>Direction d'acteurs</li>
                     <li><i class="fas fa-tasks"></i>Gestion de projet</li>
-                    <li><i class="fas fa-camera"></i>Color Grading</li>
-                    <li><i class="fas fa-palette"></i>DaVinci Resolve</li>
-                    <li><i class="fas fa-palette"></i>Blackmagick Fusion</li>
+                    <li><i class="fas fa-palette"></i>Color Grading</li>
+                    <li><i class="fas fa-cut"></i>DaVinci Resolve</li>
+                    <li><i class="fas fa-wand-magic-sparkles"></i>Blackmagick Fusion</li>
                     <li><i class="fas fa-cut"></i>Adobe Premiere Pro</li>
-                    <li><i class="fas fa-video"></i>Adobe After Effect</li>
+                    <li><i class="fas fa-magic"></i>Adobe After Effect</li>
                     <li><i class="fas fa-camera-retro"></i>Équipements de tournage</li>
                     <li><i class="fas fa-language"></i>Anglais (Courant)</li>
                 </ul>
-                
+
                 <div class="download-cv">
                      <a href="pdf/cv_thimeonguyen.pdf" class="cta-button" download>Télécharger mon CV complet (PDF)</a>
                 </div>
@@ -758,8 +796,7 @@
             <p class="contact-intro">Intéressé par une collaboration ou pour discuter d'un projet ? N'hésitez pas à me joindre.</p>
             <a href="mailto:contact@thimeonguyen.com" class="email-link" target="_blank">contact@thimeonguyen.com</a>
             <div class="social-links">
-                <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" target="_blank" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+                <a href="https://vimeo.com/user96164979" target="_blank" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
                 <a href="https://www.instagram.com/thimeo_nguyen" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
@@ -793,7 +830,7 @@
             const navMenu = document.querySelector('#nav-menu');
             const navLinks = document.querySelectorAll('#nav-menu a');
             const sections = document.querySelectorAll('section');
-            
+
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
                     navbar.classList.add('scrolled');
@@ -801,7 +838,7 @@
                     navbar.classList.remove('scrolled');
                 }
 
-                let currentSectionId = '';
+                let currentSectionId = 'accueil';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     if (pageYOffset >= sectionTop - navbar.offsetHeight - 50) {
@@ -834,30 +871,61 @@
                     });
                 });
             }
-            
+
             const revealElements = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        // observer.unobserve(entry.target); // Optionnel
                     }
                 });
             }, { threshold: 0.1 });
 
             revealElements.forEach((el, index) => {
                 if (el.closest('.projects-grid')) {
-                    el.style.setProperty('--item-index', index % 3); 
+                    el.style.setProperty('--item-index', index % 3);
                 }
                 revealObserver.observe(el);
             });
 
+            // --- Showreel Autoplay/Pause Logic ---
+            const showreelVideoContainer = document.querySelector('#showreel .showreel-video-container');
+            const showreelIframe = document.getElementById('showreelVideo');
+            let showreelPlayer;
+
+            if (showreelIframe) {
+                showreelPlayer = new Vimeo.Player(showreelIframe);
+
+                const showreelIntersectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Le paramètre background=1 gère l'autoplay muté.
+                            // On peut s'assurer qu'il joue s'il avait été mis en pause.
+                            showreelPlayer.play().catch(error => {
+                                if (error.name !== 'PasswordError' && error.name !== 'PrivacyError') {
+                                    console.warn("Showreel play failed:", error.name);
+                                }
+                            });
+                        } else {
+                            showreelPlayer.pause();
+                        }
+                    });
+                }, { threshold: 0.2 }); // Déclenche quand 50% de la vidéo est visible
+
+                if (showreelVideoContainer) {
+                    showreelIntersectionObserver.observe(showreelVideoContainer);
+                }
+            }
+
+
+            // --- Modal Logic ---
             const projectItems = document.querySelectorAll('.project-item');
             const modal = document.getElementById('projectModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalMediaContainer = document.getElementById('modalMediaContainer');
             const modalDescription = document.getElementById('modalDescription');
             const closeButton = document.querySelector('.close-button');
+            let currentModalPlayer = null; // Pour garder une référence au player de la modale
 
             projectItems.forEach(item => {
                 item.addEventListener('click', () => {
@@ -867,25 +935,28 @@
 
                     modalTitle.textContent = title;
                     modalDescription.textContent = description;
-                    modalMediaContainer.innerHTML = ''; 
+                    modalMediaContainer.innerHTML = '';
 
                     if (type === 'vimeo') {
                         const vimeoId = item.dataset.vimeoId;
                         const iframeContainer = document.createElement('div');
                         iframeContainer.classList.add('vimeo-embed-container');
                         const iframe = document.createElement('iframe');
-                        iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0&muted=0`;
+                        // Paramètres pour la modale: autoplay avec son, look épuré
+                        iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=0&loop=1&title=0&byline=0&portrait=0`;
                         iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
                         iframe.setAttribute('allowfullscreen', '');
                         iframe.setAttribute('frameborder', '0');
                         iframeContainer.appendChild(iframe);
                         modalMediaContainer.appendChild(iframeContainer);
+                        currentModalPlayer = new Vimeo.Player(iframe); // Crée un player pour la vidéo de la modale
                     } else if (type === 'image') {
                         const imageUrl = item.dataset.imageUrl;
                         const img = document.createElement('img');
                         img.src = imageUrl;
                         img.alt = title;
                         modalMediaContainer.appendChild(img);
+                        currentModalPlayer = null; // Pas de player pour une image
                     }
                     modal.style.display = 'flex';
                     document.body.style.overflow = 'hidden';
@@ -894,7 +965,11 @@
 
             function closeModal() {
                 modal.style.display = 'none';
-                modalMediaContainer.innerHTML = ''; 
+                if (currentModalPlayer) {
+                    currentModalPlayer.unload().catch(e => console.warn("Error unloading modal player:", e)); // Arrête et décharge la vidéo
+                    currentModalPlayer = null;
+                }
+                modalMediaContainer.innerHTML = '';
                 document.body.style.overflow = 'auto';
             }
 
@@ -907,13 +982,13 @@
                     closeModal();
                 }
             });
-            
+
             window.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && modal.style.display === 'flex') {
                     closeModal();
                 }
             });
-            
+
             document.getElementById('currentYear').textContent = new Date().getFullYear();
         });
     </script>
