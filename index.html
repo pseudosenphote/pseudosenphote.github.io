@@ -284,7 +284,7 @@
             justify-content: flex-end;
             align-items: center;
             padding: 25px;
-            opacity: 0;
+            opacity: 0; /* Default: hidden for hover devices */
             transition: opacity 0.4s ease;
             text-align: center;
             border-radius: inherit;
@@ -295,9 +295,9 @@
             font-size: 1.7rem;
             font-weight: 700;
             margin-bottom: 8px;
-            transform: translateY(20px);
+            transform: translateY(20px); /* Default: shifted for hover devices */
             transition: transform 0.4s ease 0.1s, opacity 0.4s ease 0.1s;
-            opacity: 0;
+            opacity: 0; /* Default: hidden for hover devices */
             display: flex;
             align-items: center;
         }
@@ -310,17 +310,17 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 15px;
-            transform: translateY(20px);
+            transform: translateY(20px); /* Default: shifted for hover devices */
             transition: transform 0.4s ease 0.15s, opacity 0.4s ease 0.15s;
-            opacity: 0;
+            opacity: 0; /* Default: hidden for hover devices */
         }
         .project-item-overlay .overlay-cta {
             color: var(--accent-color);
             font-weight: 500;
             font-size: 0.95rem;
-            transform: translateY(20px);
+            transform: translateY(20px); /* Default: shifted for hover devices */
             transition: transform 0.4s ease 0.2s, opacity 0.4s ease 0.2s;
-            opacity: 0;
+            opacity: 0; /* Default: hidden for hover devices */
             display: inline-flex;
             align-items: center;
         }
@@ -328,21 +328,49 @@
             margin-left: 8px;
         }
 
-        .project-item:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 15px 35px var(--shadow-medium);
+        /* --- HOVER STYLES FOR HOVER-CAPABLE DEVICES --- */
+        @media (hover: hover) {
+            .project-item:hover {
+                transform: translateY(-12px) scale(1.02);
+                box-shadow: 0 15px 35px var(--shadow-medium);
+            }
+            .project-item:hover .project-item-media img.thumbnail {
+                transform: scale(1.1);
+            }
+            .project-item:hover .project-item-overlay {
+                opacity: 1;
+            }
+            .project-item:hover .project-item-overlay h3,
+            .project-item:hover .project-item-overlay .overlay-category,
+            .project-item:hover .project-item-overlay .overlay-cta {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        .project-item:hover .project-item-media img.thumbnail {
-            transform: scale(1.1);
-        }
-        .project-item:hover .project-item-overlay {
-            opacity: 1;
-        }
-        .project-item:hover .project-item-overlay h3,
-        .project-item:hover .project-item-overlay .overlay-category,
-        .project-item:hover .project-item-overlay .overlay-cta {
-            transform: translateY(0);
-            opacity: 1;
+
+        /* --- STYLES FOR NON-HOVER (TOUCH) DEVICES --- */
+        @media (hover: none) {
+            .project-item-overlay {
+                opacity: 1; /* Make overlay visible */
+                 /* Optional: you might want a slightly different gradient if always visible */
+                background: linear-gradient(to top, rgba(18,18,18,0.95) 0%, rgba(18,18,18,0.65) 50%, transparent 100%);
+            }
+            .project-item-overlay h3,
+            .project-item-overlay .overlay-category,
+            .project-item-overlay .overlay-cta {
+                transform: translateY(0); /* Position elements correctly */
+                opacity: 1; /* Make elements visible */
+                /* Remove transition delays as they should be visible immediately */
+                transition-delay: 0s !important;
+                transition-duration: 0.2s; /* Optional: slight fade-in if desired, or 0s for instant */
+            }
+            /* Prevent card lift/zoom on tap for touch devices, as details are already visible */
+            .project-item:active { /* :active is the closest to a "tap" state */
+                transform: none; /* Or scale(1.01) for subtle feedback */
+            }
+            .project-item:active .project-item-media img.thumbnail {
+                transform: scale(1);
+            }
         }
 
         /* CV */
@@ -695,7 +723,7 @@
                 <!-- Ajout d'un ID à l'iframe pour le ciblage JS -->
                 <iframe
                     id="showreelVideo"
-                    src="https://player.vimeo.com/video/1052685291?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0"
+                    src="https://player.vimeo.com/video/1083342674?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0"
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowfullscreen>
                 </iframe>
